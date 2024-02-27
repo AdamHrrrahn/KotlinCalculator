@@ -12,6 +12,7 @@ import kotlin.math.floor
 
 class FirstFragment : Fragment() {
 
+//    setting up variables
     private var _binding: FragmentFirstBinding? = null
     private var ind = 0
     private val operands = listOf('+', '-', '/', '*')
@@ -36,7 +37,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+//        Bind the functions to the buttons
         binding.button0.setOnClickListener{
             zeroKey()
             display()
@@ -133,6 +134,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun display(){
+//        Updates the display whenever the user changes their equation.
         var equation :String = ""
         for (x in calcString){
             equation += x
@@ -141,6 +143,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun calculate() {
+//        Calculates the user's equation. only runs when the '=' button is pressed
         var ignored = false
         if (calcString.last() == '|'){
             calcString.removeLast()
@@ -167,6 +170,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun group() : String {
+//        concatenates the numbers together as strings
         val contents = mutableListOf<String>()
         var word : String = ""
         for (x in calcString) {
@@ -192,12 +196,14 @@ class FirstFragment : Fragment() {
     }
 
     private fun parse(inString : MutableList<String>) :String {
+//        Iterates through the string combining the numbers based on operations and obeying order of operations
         var contents = mutableListOf<String>()
         for (x in inString){
             contents.add(x)
         }
         var x = 0
         while (x < contents.size) {
+//            First checks for parentheses then recursively computes the equation contained therein
             val temp = contents[x]
             if (temp == "(") {
                 var depth = 1
@@ -215,9 +221,6 @@ class FirstFragment : Fragment() {
                         }
                     }
                     j++
-//                    if (j >= contents.size){
-//                        return ""
-//                    }
                 }
                 val innerResults = parse(inner)
                 if (innerResults == "undefined"){
@@ -239,6 +242,7 @@ class FirstFragment : Fragment() {
         }
         x = 0
         while (x < (contents.size)) {
+//            Secondly does multiplication and division
             val temp = contents[x]
             if (temp in arrayOf("*","/")) {
                 var value : Float = 0F
@@ -266,6 +270,7 @@ class FirstFragment : Fragment() {
         }
         x = 0
         while (x < (contents.size)) {
+//            Finally computes addition and subtraction
             val temp = contents[x]
             if (temp in arrayOf("+","-")) {
                 var value : Float = 0F
@@ -288,11 +293,13 @@ class FirstFragment : Fragment() {
             }
             x++
         }
+//        When it is done there should be a single number remaining
         return contents[0]
     }
 
 
     private fun keyCheck(key : Char) : Boolean{
+//        Allows for other functions to check if the character before the index to see if further work needs to be done.
         if(ind > 0) {
             if (calcString[ind - 1] == key) {
                 return true
@@ -301,6 +308,7 @@ class FirstFragment : Fragment() {
         return false
     }
 
+//    The next 10 functions insert a number 0-9 at the index. If inserting directly behind a close parentheses, inserts a multiplication operand
     private fun oneKey(){
         if(keyCheck(')')) mulKey()
         calcString.add(ind, '1')
@@ -362,6 +370,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun decimalKey(){
+//        Inserts a decimal if there is not one in the current number, and adds a 0 in front of it if it is the start of a number.
         if(ind == 0) {
             zeroKey()
         } else if (calcString[ind-1] in operatives) {
@@ -384,6 +393,7 @@ class FirstFragment : Fragment() {
         ind++
     }
 
+//    the next four functions insert operands at the index. if there is an existing operand before the index it replaces it, and doesn't insert an operand directly behind an open parentheses.
     private fun addKey(){
         if (ind == 0){
             return
@@ -428,6 +438,7 @@ class FirstFragment : Fragment() {
         }
     }
 
+//    The next two functions insert open and close parentheses respectively, checking if the placement is correct.
     private fun openKey(){
         if (ind > 0){
             if (keyCheck('.')) {
@@ -454,6 +465,7 @@ class FirstFragment : Fragment() {
         }
     }
 
+//    the next two functions shift the index left and right respectively
     private fun leftKey(){
         if(ind > 0) {
             calcString.remove('|')
@@ -471,6 +483,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun deleteKey(){
+//        deletes the character before the index, unless it is at the beginning or would leave a mismatched close parentheses
         if(ind > 0) {
             if (calcString[ind-1] == '(') {
                 if (numOpens == numClosed) {
@@ -487,6 +500,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun clearKey(){
+//        Clears the equation.
         calcString.clear()
         calcString.add('|')
         ind = 0

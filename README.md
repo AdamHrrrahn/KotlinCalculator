@@ -1,14 +1,10 @@
 # Overview
 
-{}
-
 This is a basic calculator app with the 4 primary functions of addition, subtraction, multiplication, and division. it has support for decimal computation and order of operation control thorugh parentheses.
 
 I used this prject to familiarize myself with the Kotlin language, and to begin to learn about making amobile application in Kotlin
 
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/erQVWjmcIVk)
 
 # Development Environment
 
@@ -20,8 +16,8 @@ I wrote the program in the Kotlin language, and used components from the kotlin 
 
 {Make a list of websites that you found helpful in this project}
 
-- [Kotlin Android](https://kotlinandroid.org/)
-- [Kotlin Programming Language](https://kotlinlang.org/)
+- Kotlin Android (https://kotlinandroid.org/)
+- Kotlin Programming Language (https://kotlinlang.org/)
 
 # Future Work
 
